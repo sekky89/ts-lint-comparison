@@ -4,8 +4,8 @@
  * ========================================================================== */
 
 // ---------------------------------------------------------------------------
-// for-direction
-//   for loop counter going in wrong direction
+// For-direction
+//   For loop counter going in wrong direction
 // ---------------------------------------------------------------------------
 const wrongDirection = () => {
   for (let i = 10; i >= 0; i++) {
@@ -14,7 +14,7 @@ const wrongDirection = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-async-promise-executor
+// No-async-promise-executor
 //   Promise executor should not be async
 // ---------------------------------------------------------------------------
 const asyncExecutor = new Promise(async (resolve) => {
@@ -23,13 +23,13 @@ const asyncExecutor = new Promise(async (resolve) => {
 });
 
 // ---------------------------------------------------------------------------
-// no-compare-neg-zero
+// No-compare-neg-zero
 //   Don't compare to -0
 // ---------------------------------------------------------------------------
-const negZero = (x: number) => x === -0;
+const negZero = (x: number) => x === 0;
 
 // ---------------------------------------------------------------------------
-// no-cond-assign
+// No-cond-assign
 //   Assignment in condition
 // ---------------------------------------------------------------------------
 const condAssign = () => {
@@ -41,18 +41,18 @@ const condAssign = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-dupe-else-if
+// No-dupe-else-if
 //   Duplicate conditions in if-else chain
 // ---------------------------------------------------------------------------
 const dupeElseIf = (val: string) => {
-  if (val === 'a') return 1;
-  else if (val === 'b') return 2;
-  else if (val === 'a') return 3;
+  if (val === 'a') {return 1;}
+  if (val === 'b') {return 2;}
+  if (val === 'a') {return 3;}
   return 0;
 };
 
 // ---------------------------------------------------------------------------
-// no-duplicate-case
+// No-duplicate-case
 //   Duplicate case in switch
 // ---------------------------------------------------------------------------
 const dupeCase = (val: number) => {
@@ -69,13 +69,13 @@ const dupeCase = (val: number) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-empty-pattern
+// No-empty-pattern
 //   Empty destructuring pattern
 // ---------------------------------------------------------------------------
 const emptyPattern = ({}: { name: string }) => 'hello';
 
 // ---------------------------------------------------------------------------
-// no-ex-assign
+// No-ex-assign
 //   Don't reassign exception in catch
 // ---------------------------------------------------------------------------
 const exAssign = () => {
@@ -88,13 +88,13 @@ const exAssign = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-sparse-arrays
+// No-sparse-arrays
 //   Don't use sparse arrays (holes)
 // ---------------------------------------------------------------------------
 const sparse = [1, , 3];
 
 // ---------------------------------------------------------------------------
-// no-unsafe-finally
+// No-unsafe-finally
 //   Don't use control flow in finally
 // ---------------------------------------------------------------------------
 const unsafeFinally = () => {
@@ -106,42 +106,42 @@ const unsafeFinally = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-unsafe-optional-chaining
+// No-unsafe-optional-chaining
 //   Unsafe use of optional chaining in arithmetic
 // ---------------------------------------------------------------------------
 const maybeObj: { val?: number } | undefined = undefined;
 const unsafeOptChain = 1 + maybeObj?.val!;
 
 // ---------------------------------------------------------------------------
-// no-unused-labels
+// No-unused-labels
 //   Unused label
 // ---------------------------------------------------------------------------
 const unusedLabel = () => {
-  myUnusedLabel: {
+  {
     const x = 1;
     return x;
   }
 };
 
 // ---------------------------------------------------------------------------
-// no-with
+// No-with
 //   Don't use with statement (strict mode prevents this, but rule still exists)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// use-isnan
+// Use-isnan
 //   Use Number.isNaN() instead of comparison with NaN
 // ---------------------------------------------------------------------------
-const nanCheck = (val: number) => val === NaN;
+const nanCheck = (val: number) => isNaN(val);
 
 // ---------------------------------------------------------------------------
-// valid-typeof
-//   typeof comparison must use valid string
+// Valid-typeof
+//   Typeof comparison must use valid string
 // ---------------------------------------------------------------------------
 const badTypeof = (val: unknown) => typeof val === 'strig';
 
 // ---------------------------------------------------------------------------
-// no-inner-declarations
+// No-inner-declarations
 //   Don't declare functions inside blocks
 // ---------------------------------------------------------------------------
 const innerDecl = (flag: boolean) => {
@@ -155,68 +155,68 @@ const innerDecl = (flag: boolean) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-control-regex
+// No-control-regex
 //   Don't use control characters in regex
 // ---------------------------------------------------------------------------
-const controlRegex = new RegExp('\x01');
+const controlRegex = /\x01/;
 
 // ---------------------------------------------------------------------------
-// no-empty-character-class
+// No-empty-character-class
 //   Empty character class in regex
 // ---------------------------------------------------------------------------
 const emptyCharClass = /^abc[]/;
 
 // ---------------------------------------------------------------------------
-// no-invalid-regexp
+// No-invalid-regexp
 //   Invalid regex
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// no-regex-spaces
+// No-regex-spaces
 //   Multiple spaces in regex
 // ---------------------------------------------------------------------------
-const multiSpaceRegex = /foo   bar/;
+const multiSpaceRegex = /foo {3}bar/;
 
 // ---------------------------------------------------------------------------
-// no-misleading-character-class
+// No-misleading-character-class
 //   Misleading character class (combined chars)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// no-useless-backreference
+// No-useless-backreference
 //   Backreference that will always be empty
 // ---------------------------------------------------------------------------
 const uselessBackref = /(?:a)|(b)\1/;
 
 // ---------------------------------------------------------------------------
-// no-octal
+// No-octal
 //   Octal literals
 // ---------------------------------------------------------------------------
-// const octal = 071; // TypeScript prevents this in strict mode
+// Const octal = 071; // TypeScript prevents this in strict mode
 
 // ---------------------------------------------------------------------------
-// no-octal-escape
+// No-octal-escape
 //   Octal escape sequences in strings
 // ---------------------------------------------------------------------------
-// const octalEscape = '\251'; // TypeScript prevents in strict mode
+// Const octalEscape = '\251'; // TypeScript prevents in strict mode
 
 // ---------------------------------------------------------------------------
-// prefer-destructuring
+// Prefer-destructuring
 //   VariableDeclarator: object=true (must destructure object property)
 //   AssignmentExpression: array=true
 // ---------------------------------------------------------------------------
-const obj = { name: 'test', age: 30 };
-const name = obj.name;
+const obj = { age: 30, name: 'test' };
+const {name} = obj;
 
 // ---------------------------------------------------------------------------
-// prefer-spread
+// Prefer-spread
 //   Use spread instead of apply
 // ---------------------------------------------------------------------------
 const numbers = [1, 2, 3];
 const maxNum = Math.max.apply(Math, numbers);
 
 // ---------------------------------------------------------------------------
-// no-loop-func
+// No-loop-func
 //   Function created inside loop references mutable var
 // ---------------------------------------------------------------------------
 const loopFn = () => {
@@ -228,8 +228,8 @@ const loopFn = () => {
 };
 
 // ---------------------------------------------------------------------------
-// global-require
-//   require() should be at top level
+// Global-require
+//   Require() should be at top level
 // ---------------------------------------------------------------------------
 const lazyRequire = () => {
   const mod = require('path');
@@ -237,47 +237,47 @@ const lazyRequire = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-new-require
+// No-new-require
 //   Don't use new require()
 // ---------------------------------------------------------------------------
-// const req = new require('path'); // TS prevents this
+// Const req = new require('path'); // TS prevents this
 
 // ---------------------------------------------------------------------------
-// no-path-concat
+// No-path-concat
 //   Don't concatenate __dirname with string
 // ---------------------------------------------------------------------------
-// const fullPath = __dirname + '/file.txt'; // Only valid in CJS
+// Const fullPath = __dirname + '/file.txt'; // Only valid in CJS
 
 // ---------------------------------------------------------------------------
-// new-cap
-//   newIsCap: true → new must be used with capitalized function
+// New-cap
+//   NewIsCap: true → new must be used with capitalized function
 // ---------------------------------------------------------------------------
 const myConstructor = function myConstructor() {} as unknown as new () => object;
 const thing = new myConstructor();
 
 // ---------------------------------------------------------------------------
-// grouped-accessor-pairs
+// Grouped-accessor-pairs
 //   Getter and setter should be adjacent
 // ---------------------------------------------------------------------------
 const groupedAccessor = {
+  age: 30,
   get name() {
     return 'hello';
   },
-  age: 30,
   set name(val: string) {
     console.log(val);
   },
 };
 
 // ---------------------------------------------------------------------------
-// no-class-assign
+// No-class-assign
 //   Don't reassign a class
 // ---------------------------------------------------------------------------
 class ReassignedClass {}
 // ReassignedClass = class {}; // TS prevents const reassignment
 
 // ---------------------------------------------------------------------------
-// no-extend-native
+// No-extend-native
 //   Don't extend native prototypes
 // ---------------------------------------------------------------------------
 Object.defineProperty(Array.prototype, 'customFlat', {
@@ -285,13 +285,13 @@ Object.defineProperty(Array.prototype, 'customFlat', {
 });
 
 // ---------------------------------------------------------------------------
-// no-nonoctal-decimal-escape
+// No-nonoctal-decimal-escape
 //   Don't use \8 or \9 escape in strings
 // ---------------------------------------------------------------------------
-// const nonoctal = '\8'; // Strict mode prevents this
+// Const nonoctal = '\8'; // Strict mode prevents this
 
 // ---------------------------------------------------------------------------
-// require-yield
+// Require-yield
 //   Generator must have yield
 // ---------------------------------------------------------------------------
 function* noYield() {
@@ -299,28 +299,29 @@ function* noYield() {
 }
 
 // ---------------------------------------------------------------------------
-// no-restricted-exports
+// No-restricted-exports
 //   Some export names may be restricted
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// strict
+// Strict
 //   'use strict' is unnecessary in ES modules
 // ---------------------------------------------------------------------------
 // 'use strict'; // Would be at top of file, causing issues with imports
 
 // ---------------------------------------------------------------------------
-// no-shadow-restricted-names
+// No-shadow-restricted-names
 //   Don't shadow NaN, Infinity, undefined, etc.
 // ---------------------------------------------------------------------------
-// const undefined = 'bad'; // TS prevents this
+// Const undefined = 'bad'; // TS prevents this
 
 // ---------------------------------------------------------------------------
-// no-empty-function
-//   allow: arrowFunctions, functions, methods → need getter/setter to trigger
+// No-empty-function
+//   Allow: arrowFunctions, functions, methods → need getter/setter to trigger
 // ---------------------------------------------------------------------------
 class EmptyGetterClass {
   get value() {}
+
   set value(_v: unknown) {}
 }
 

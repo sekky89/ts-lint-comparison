@@ -4,94 +4,96 @@
  * ========================================================================== */
 
 // ---------------------------------------------------------------------------
-// import/order
+// Import/order
 //   External imports must come before internal, with newlines between groups
 //   Alphabetically ordered within groups
 // ---------------------------------------------------------------------------
-import { dummyUtil } from './dummy-util';
 import { useState } from 'react';
 
 // ---------------------------------------------------------------------------
-// import/extensions
+// Import/extensions
 //   Don't include file extensions for js/jsx/ts/tsx
 // ---------------------------------------------------------------------------
-import About from '../pages/About.tsx';
 
 // ---------------------------------------------------------------------------
-// import/no-duplicates
+// Import/no-duplicates
 //   Don't import the same module twice
 // ---------------------------------------------------------------------------
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
 // ---------------------------------------------------------------------------
-// import/first
-//   Imports must come before any other statements
-// ---------------------------------------------------------------------------
-const earlyStatement = 'I should not be here before imports';
-
-// ---------------------------------------------------------------------------
-// import/newline-after-import
-//   Must have empty line after last import
-// ---------------------------------------------------------------------------
-
-// ---------------------------------------------------------------------------
-// import/no-mutable-exports
-//   Don't export mutable bindings
-// ---------------------------------------------------------------------------
-export let mutableExport = 'bad';
-
-// ---------------------------------------------------------------------------
-// import/no-absolute-path
+// Import/no-absolute-path
 //   Don't use absolute path imports
 // ---------------------------------------------------------------------------
-// import something from '/absolute/path'; // would fail resolution too
+// Import something from '/absolute/path'; // would fail resolution too
 
 // ---------------------------------------------------------------------------
-// import/no-useless-path-segments
+// Import/no-useless-path-segments
 //   Don't use unnecessary path segments like ./foo/../bar
 // ---------------------------------------------------------------------------
-import { dummyUtil as dup } from './../ng-examples/dummy-util';
 
 // ---------------------------------------------------------------------------
-// import/no-webpack-loader-syntax
+// Import/no-webpack-loader-syntax
 //   Don't use webpack loader syntax
 // ---------------------------------------------------------------------------
-// import styles from '!style-loader!css-loader!./styles.css';
+// Import styles from '!style-loader!css-loader!./styles.css';
 // (commented out because it would fail resolution)
 
 // ---------------------------------------------------------------------------
-// import/no-named-default
+// Import/no-named-default
 //   Don't import default as named
 // ---------------------------------------------------------------------------
 // (hard to demonstrate without a specific module that exports default)
 
 // ---------------------------------------------------------------------------
-// import/no-self-import
+// Import/no-self-import
 //   A module must not import itself
 // ---------------------------------------------------------------------------
-// import self from './05-import-ng'; // would cause circular
+// Import self from './05-import-ng'; // would cause circular
 
 // ---------------------------------------------------------------------------
-// import/no-cycle
+// Import/no-cycle
 //   Circular imports are banned
 // ---------------------------------------------------------------------------
 // (requires two files to demonstrate)
 
 // ---------------------------------------------------------------------------
-// import/no-extraneous-dependencies
+// Import/no-extraneous-dependencies
 //   Don't import packages not in dependencies
 // ---------------------------------------------------------------------------
-// import _ from 'lodash'; // not in package.json
+// Import _ from 'lodash'; // not in package.json
 
 // ---------------------------------------------------------------------------
-// sort-imports (core rule)
+// Sort-imports (core rule)
 //   Members within import must be alphabetically sorted
 // ---------------------------------------------------------------------------
-import { Route, Link, Routes } from 'react-router';
+import { Link, Route, Routes } from 'react-router';
+
+import About from '../pages/About.tsx';
+
+import { dummyUtil , dummyUtil as dup } from './dummy-util.ts';
+
 
 // ---------------------------------------------------------------------------
-// unused-imports/no-unused-imports (warn)
+// Import/first
+//   Imports must come before any other statements
+// ---------------------------------------------------------------------------
+const earlyStatement = 'I should not be here before imports';
+
+// ---------------------------------------------------------------------------
+// Import/newline-after-import
+//   Must have empty line after last import
+// ---------------------------------------------------------------------------
+
+// ---------------------------------------------------------------------------
+// Import/no-mutable-exports
+//   Don't export mutable bindings
+// ---------------------------------------------------------------------------
+export const mutableExport = 'bad';
+
+// ---------------------------------------------------------------------------
+// Unused-imports/no-unused-imports (warn)
 //   Remove unused imports
 // ---------------------------------------------------------------------------
 

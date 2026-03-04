@@ -4,28 +4,28 @@
  * ========================================================================== */
 
 // ---------------------------------------------------------------------------
-// eqeqeq
+// Eqeqeq
 // ---------------------------------------------------------------------------
 const loose = (a: string) => a == 'test';
 
 // ---------------------------------------------------------------------------
-// no-eval
+// No-eval
 // ---------------------------------------------------------------------------
 const evalUsage = () => eval('1 + 1');
 
 // ---------------------------------------------------------------------------
-// no-implied-eval
-//   setTimeout/setInterval with string argument
+// No-implied-eval
+//   SetTimeout/setInterval with string argument
 // ---------------------------------------------------------------------------
 const impliedEval = () => setTimeout('alert("hi")', 100);
 
 // ---------------------------------------------------------------------------
-// no-alert
+// No-alert
 // ---------------------------------------------------------------------------
 const alertUsage = () => alert('oops');
 
 // ---------------------------------------------------------------------------
-// no-console
+// No-console
 // ---------------------------------------------------------------------------
 const consoleUsage = () => {
   console.log('debug');
@@ -34,15 +34,12 @@ const consoleUsage = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-debugger
+// No-debugger
 // ---------------------------------------------------------------------------
-const debuggerUsage = () => {
-  debugger;
-  return 1;
-};
+const debuggerUsage = () => 1;
 
 // ---------------------------------------------------------------------------
-// no-param-reassign
+// No-param-reassign
 //   Reassigning function parameters or their properties
 // ---------------------------------------------------------------------------
 const paramReassign = (obj: { count: number }) => {
@@ -51,7 +48,7 @@ const paramReassign = (obj: { count: number }) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-return-assign
+// No-return-assign
 //   Assignment in return statement
 // ---------------------------------------------------------------------------
 const returnAssign = () => {
@@ -61,7 +58,7 @@ const returnAssign = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-return-await
+// No-return-await
 //   Unnecessary return await
 // ---------------------------------------------------------------------------
 const returnAwait = async () => {
@@ -70,7 +67,7 @@ const returnAwait = async () => {
 };
 
 // ---------------------------------------------------------------------------
-// consistent-return
+// Consistent-return
 //   Function sometimes returns a value and sometimes doesn't
 // ---------------------------------------------------------------------------
 const inconsistentReturn = (flag: boolean) => {
@@ -80,7 +77,7 @@ const inconsistentReturn = (flag: boolean) => {
 };
 
 // ---------------------------------------------------------------------------
-// array-callback-return
+// Array-callback-return
 //   Array method callbacks must return
 // ---------------------------------------------------------------------------
 const noReturn = [1, 2, 3].map((n) => {
@@ -88,7 +85,7 @@ const noReturn = [1, 2, 3].map((n) => {
 });
 
 // ---------------------------------------------------------------------------
-// default-case
+// Default-case
 //   Switch must have default case
 // ---------------------------------------------------------------------------
 const noDefault = (val: string) => {
@@ -101,7 +98,7 @@ const noDefault = (val: string) => {
 };
 
 // ---------------------------------------------------------------------------
-// default-case-last
+// Default-case-last
 //   Default case must be last
 // ---------------------------------------------------------------------------
 const defaultNotLast = (val: string) => {
@@ -114,13 +111,13 @@ const defaultNotLast = (val: string) => {
 };
 
 // ---------------------------------------------------------------------------
-// default-param-last
+// Default-param-last
 //   Default parameters must be last
 // ---------------------------------------------------------------------------
-const defaultNotLastParam = (a: number = 1, b: number) => a + b;
+const defaultNotLastParam = (a = 1, b: number) => a + b;
 
 // ---------------------------------------------------------------------------
-// no-fallthrough
+// No-fallthrough
 //   Switch case without break
 // ---------------------------------------------------------------------------
 const fallthrough = (val: number) => {
@@ -138,8 +135,8 @@ const fallthrough = (val: number) => {
 };
 
 // ---------------------------------------------------------------------------
-// guard-for-in
-//   for-in must have hasOwnProperty check
+// Guard-for-in
+//   For-in must have hasOwnProperty check
 // ---------------------------------------------------------------------------
 const forInNoGuard = (obj: Record<string, number>) => {
   for (const key in obj) {
@@ -148,8 +145,8 @@ const forInNoGuard = (obj: Record<string, number>) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-restricted-syntax
-//   for-in, for-of, labels, with are restricted by airbnb
+// No-restricted-syntax
+//   For-in, for-of, labels, with are restricted by airbnb
 // ---------------------------------------------------------------------------
 const restrictedForOf = (arr: number[]) => {
   for (const item of arr) {
@@ -158,7 +155,7 @@ const restrictedForOf = (arr: number[]) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-loop-func
+// No-loop-func
 //   Function created inside a loop
 // ---------------------------------------------------------------------------
 const loopFunc = () => {
@@ -170,8 +167,8 @@ const loopFunc = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-await-in-loop
-//   await inside a loop
+// No-await-in-loop
+//   Await inside a loop
 // ---------------------------------------------------------------------------
 const awaitInLoop = async (urls: string[]) => {
   const results: string[] = [];
@@ -183,13 +180,13 @@ const awaitInLoop = async (urls: string[]) => {
 };
 
 // ---------------------------------------------------------------------------
-// no-promise-executor-return
+// No-promise-executor-return
 //   Don't return inside promise executor
 // ---------------------------------------------------------------------------
 const promiseReturn = new Promise((resolve) => resolve(42));
 
 // ---------------------------------------------------------------------------
-// no-constructor-return
+// No-constructor-return
 //   Don't return from constructor
 // ---------------------------------------------------------------------------
 class BadConstructor {
@@ -199,7 +196,7 @@ class BadConstructor {
 }
 
 // ---------------------------------------------------------------------------
-// no-throw-literal
+// No-throw-literal
 //   Throw an Error object, not a literal
 // ---------------------------------------------------------------------------
 const throwLiteral = () => {
@@ -207,19 +204,19 @@ const throwLiteral = () => {
 };
 
 // ---------------------------------------------------------------------------
-// prefer-promise-reject-errors
+// Prefer-promise-reject-errors
 //   Reject with an Error object
 // ---------------------------------------------------------------------------
 const badReject = () => Promise.reject('not an error');
 
 // ---------------------------------------------------------------------------
-// radix
-//   parseInt must have radix argument
+// Radix
+//   ParseInt must have radix argument
 // ---------------------------------------------------------------------------
-const noRadix = parseInt('10');
+const noRadix = Number.parseInt('10');
 
 // ---------------------------------------------------------------------------
-// no-void
+// No-void
 //   Don't use void operator
 // ---------------------------------------------------------------------------
 const voidUsage = () => {
@@ -227,13 +224,13 @@ const voidUsage = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-sequences
+// No-sequences
 //   Don't use comma operator
 // ---------------------------------------------------------------------------
 const commaOperator = () => (1, 2, 3);
 
 // ---------------------------------------------------------------------------
-// no-unused-expressions
+// No-unused-expressions
 //   Expression that doesn't do anything
 // ---------------------------------------------------------------------------
 const unusedExpr = () => {
@@ -242,7 +239,7 @@ const unusedExpr = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-useless-catch
+// No-useless-catch
 //   Catch that just re-throws
 // ---------------------------------------------------------------------------
 const uselessCatch = async () => {
@@ -254,61 +251,61 @@ const uselessCatch = async () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-useless-return
+// No-useless-return
 //   Unnecessary return at end of function
 // ---------------------------------------------------------------------------
 const uselessReturn = () => {
   console.log('done');
-  return;
+  
 };
 
 // ---------------------------------------------------------------------------
-// no-useless-concat
+// No-useless-concat
 //   Unnecessary string concatenation of literals
 // ---------------------------------------------------------------------------
-const uselessConcat = 'hello' + ' ' + 'world';
+const uselessConcat = "hello world";
 
 // ---------------------------------------------------------------------------
-// no-self-compare
+// No-self-compare
 //   Comparing a value to itself
 // ---------------------------------------------------------------------------
 const selfCompare = (val: number) => val === val;
 
 // ---------------------------------------------------------------------------
-// no-self-assign
+// No-self-assign
 //   Assigning a variable to itself
 // ---------------------------------------------------------------------------
 let selfAssignVal = 5;
 selfAssignVal = selfAssignVal;
 
 // ---------------------------------------------------------------------------
-// no-extend-native
+// No-extend-native
 //   Don't modify native prototypes
 // ---------------------------------------------------------------------------
 (Array.prototype as Record<string, unknown>).customMethod = () => {};
 
 // ---------------------------------------------------------------------------
-// no-iterator
+// No-iterator
 //   Don't use __iterator__
 // ---------------------------------------------------------------------------
 const iteratorProp = {} as Record<string, unknown>;
 iteratorProp.__iterator__ = () => {};
 
 // ---------------------------------------------------------------------------
-// no-proto
+// No-proto
 //   Don't use __proto__
 // ---------------------------------------------------------------------------
 const protoUsage = {} as Record<string, unknown>;
 const parent = protoUsage.__proto__;
 
 // ---------------------------------------------------------------------------
-// no-caller
+// No-caller
 //   Don't use arguments.caller or arguments.callee
 // ---------------------------------------------------------------------------
 const callerUsage = () => arguments.callee;
 
 // ---------------------------------------------------------------------------
-// no-new
+// No-new
 //   Don't use new for side effects
 // ---------------------------------------------------------------------------
 class SideEffect {
@@ -321,59 +318,59 @@ const newSideEffect = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-new-func
+// No-new-func
 //   Don't use new Function()
 // ---------------------------------------------------------------------------
 const dynamicFn = new Function('a', 'b', 'return a + b');
 
 // ---------------------------------------------------------------------------
-// no-new-wrappers
+// No-new-wrappers
 //   Don't use new String(), new Number(), new Boolean()
 // ---------------------------------------------------------------------------
-const wrappedString = new String('hello');
-const wrappedNumber = new Number(42);
-const wrappedBool = new Boolean(true);
+const wrappedString = 'hello';
+const wrappedNumber = 42;
+const wrappedBool = true;
 
 // ---------------------------------------------------------------------------
-// no-new-object
+// No-new-object
 //   Don't use new Object()
 // ---------------------------------------------------------------------------
 const objConstructor = new Object();
 
 // ---------------------------------------------------------------------------
-// no-script-url
+// No-script-url
 //   Don't use javascript: URLs
 // ---------------------------------------------------------------------------
 const scriptUrl = () => <a href="javascript:void(0)">link</a>;
 
 // ---------------------------------------------------------------------------
-// no-extra-bind
+// No-extra-bind
 //   Unnecessary .bind()
 // ---------------------------------------------------------------------------
-const extraBind = (() => 42).bind(null);
+const extraBind = (() => 42);
 
 // ---------------------------------------------------------------------------
-// no-extra-label
+// No-extra-label
 //   Unnecessary label
 // ---------------------------------------------------------------------------
 const extraLabel = () => {
-  outer: while (true) {
-    break outer;
+  while (true) {
+    break;
   }
 };
 
 // ---------------------------------------------------------------------------
-// no-labels
+// No-labels
 //   Don't use labels
 // ---------------------------------------------------------------------------
 const labelsUsage = () => {
-  myLabel: for (let i = 0; i < 5; i++) {
-    break myLabel;
+  for (let i = 0; i < 5; i++) {
+    break;
   }
 };
 
 // ---------------------------------------------------------------------------
-// no-lone-blocks
+// No-lone-blocks
 //   Unnecessary block
 // ---------------------------------------------------------------------------
 const loneBlock = () => {
@@ -383,21 +380,22 @@ const loneBlock = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-case-declarations
+// No-case-declarations
 //   Declarations in case without block
 // ---------------------------------------------------------------------------
 const caseDecl = (val: number) => {
   switch (val) {
-    case 1:
+    case 1: {
       const msg = 'one';
       return msg;
+    }
     default:
       return '';
   }
 };
 
 // ---------------------------------------------------------------------------
-// no-empty
+// No-empty
 //   Empty block statement
 // ---------------------------------------------------------------------------
 const emptyBlock = () => {
@@ -407,30 +405,30 @@ const emptyBlock = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-empty-function
+// No-empty-function
 //   Empty function body
 // ---------------------------------------------------------------------------
 const emptyFn = () => {};
 
 // ---------------------------------------------------------------------------
-// no-extra-boolean-cast
+// No-extra-boolean-cast
 //   Unnecessary boolean cast
 // ---------------------------------------------------------------------------
 const extraBoolCast = (val: string) => {
-  if (!!val) {
+  if (val) {
     return true;
   }
   return false;
 };
 
 // ---------------------------------------------------------------------------
-// no-prototype-builtins
+// No-prototype-builtins
 //   Don't call prototype methods directly on objects
 // ---------------------------------------------------------------------------
-const protoBuiltin = (obj: Record<string, unknown>) => obj.hasOwnProperty('key');
+const protoBuiltin = (obj: Record<string, unknown>) => Object.hasOwn(obj, 'key');
 
 // ---------------------------------------------------------------------------
-// class-methods-use-this
+// Class-methods-use-this
 //   Class methods that don't use `this` should be static
 // ---------------------------------------------------------------------------
 class NoThisMethod {
@@ -440,31 +438,29 @@ class NoThisMethod {
 }
 
 // ---------------------------------------------------------------------------
-// max-classes-per-file
+// Max-classes-per-file
 //   Only one class per file (already violated by multiple class examples)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// no-useless-constructor
+// No-useless-constructor
 //   Unnecessary constructor
 // ---------------------------------------------------------------------------
 class UselessConstructor {
-  constructor() {
-    // nothing
-  }
+  
 }
 
 // ---------------------------------------------------------------------------
-// no-useless-computed-key
+// No-useless-computed-key
 //   Unnecessary computed property key
 // ---------------------------------------------------------------------------
-const computedKey = { ['name']: 'value' };
+const computedKey = { 'name': 'value' };
 
 // ---------------------------------------------------------------------------
-// no-useless-rename
+// No-useless-rename
 //   Unnecessary rename in destructuring
 // ---------------------------------------------------------------------------
-const { toString: toString } = Object.prototype;
+const { toString } = Object.prototype;
 
 export {
   loose,

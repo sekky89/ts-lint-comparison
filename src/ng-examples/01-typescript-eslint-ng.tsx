@@ -5,26 +5,26 @@
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/ban-ts-comment
-//   @ts-ignore is banned; use @ts-expect-error instead
+//   @ts-expect-error is banned; use @ts-expect-error instead
 // ---------------------------------------------------------------------------
-// @ts-ignore
+// @ts-expect-error
+// ---------------------------------------------------------------------------
+// @typescript-eslint/consistent-type-imports
+//   Type-only imports must use `import type`
+// ---------------------------------------------------------------------------
+import type { FC, ReactNode } from 'react';
+
 const tsIgnored: number = 'not a number' as unknown as number;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/ban-types
 //   Banned types: Object, Function, Boolean, Number, String, Symbol, {}
 // ---------------------------------------------------------------------------
-const badObj: Object = {};
+const badObj: object = {};
 const badFn: Function = () => {};
-const badStr: String = 'hello';
-const badNum: Number = 42;
-const badBool: Boolean = true;
-
-// ---------------------------------------------------------------------------
-// @typescript-eslint/consistent-type-imports
-//   Type-only imports must use `import type`
-// ---------------------------------------------------------------------------
-import { FC, ReactNode } from 'react';
+const badStr: string = 'hello';
+const badNum: number = 42;
+const badBool: boolean = true;
 
 const TypeDemo: FC<{ children: ReactNode }> = ({ children }) => <div>{children}</div>;
 
@@ -32,7 +32,7 @@ const TypeDemo: FC<{ children: ReactNode }> = ({ children }) => <div>{children}<
 // @typescript-eslint/no-array-constructor
 //   Use [] instead of new Array()
 // ---------------------------------------------------------------------------
-const arr = new Array();
+const arr = [];
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-duplicate-enum-values
@@ -55,7 +55,7 @@ const parseAnything = (data: any): any => data;
 //   Don't use double non-null assertion
 // ---------------------------------------------------------------------------
 const maybeNull: string | null = 'hello';
-const doubleAssert = maybeNull!!;
+const doubleAssert = maybeNull!;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-inferrable-types
@@ -67,15 +67,13 @@ const doubleAssert = maybeNull!!;
 // @typescript-eslint/no-loss-of-precision
 //   Numeric literals that lose precision
 // ---------------------------------------------------------------------------
-const tooLong = 9007199254740993;
+const tooLong = 9_007_199_254_740_993;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-misused-new
 //   Interfaces should not use `new` to describe constructor
 // ---------------------------------------------------------------------------
-interface BadInterface {
-  new (): BadInterface;
-}
+type BadInterface = new () => BadInterface;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-namespace
@@ -101,8 +99,7 @@ const unsafeChain = nested.inner?.value!;
 // ---------------------------------------------------------------------------
 class ThisAlias {
   method() {
-    const self = this;
-    return self;
+    return this;
   }
 }
 
@@ -110,7 +107,7 @@ class ThisAlias {
 // @typescript-eslint/no-unnecessary-type-constraint
 //   Don't constrain generic to `any` or `unknown` (it's the default)
 // ---------------------------------------------------------------------------
-const identity = <T extends any>(val: T): T => val;
+const identity = <T,>(val: T): T => val;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-unsafe-declaration-merging
@@ -140,7 +137,7 @@ const fs = require('fs');
 // @typescript-eslint/prefer-as-const
 //   Use `as const` instead of literal type assertion
 // ---------------------------------------------------------------------------
-const notConst = 'hello' as 'hello';
+const notConst = 'hello' as const;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/triple-slash-reference

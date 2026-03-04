@@ -4,24 +4,24 @@
  * ========================================================================== */
 
 // ---------------------------------------------------------------------------
-// prefer-template
+// Prefer-template
 //   Use template literals instead of string concatenation
 // ---------------------------------------------------------------------------
-const greeting = (name: string) => 'Hello, ' + name + '!';
+const greeting = (name: string) => `Hello, ${  name  }!`;
 
 // ---------------------------------------------------------------------------
-// no-nested-ternary
+// No-nested-ternary
 // ---------------------------------------------------------------------------
 const classify = (x: number) => (x > 10 ? 'big' : x > 5 ? 'mid' : 'small');
 
 // ---------------------------------------------------------------------------
-// no-unneeded-ternary
+// No-unneeded-ternary
 //   Unnecessary ternary when boolean expression suffices
 // ---------------------------------------------------------------------------
-const boolTernary = (val: boolean) => (val ? true : false);
+const boolTernary = (val: boolean) => (Boolean(val));
 
 // ---------------------------------------------------------------------------
-// no-plusplus
+// No-plusplus
 // ---------------------------------------------------------------------------
 const incrementDemo = () => {
   let val = 0;
@@ -30,54 +30,54 @@ const incrementDemo = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-bitwise
+// No-bitwise
 //   Bitwise operators are error-prone
 // ---------------------------------------------------------------------------
 const bitwiseOr = (a: number, b: number) => a | b;
 const bitwiseAnd = (a: number, b: number) => a & b;
 
 // ---------------------------------------------------------------------------
-// no-continue
+// No-continue
 //   Don't use continue statement
 // ---------------------------------------------------------------------------
 const continueDemo = (arr: number[]) => {
   const results: number[] = [];
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] < 0) continue;
+    if (arr[i] < 0) {continue;}
     results.push(arr[i]);
   }
   return results;
 };
 
 // ---------------------------------------------------------------------------
-// no-lonely-if
-//   if inside else should be else-if
+// No-lonely-if
+//   If inside else should be else-if
 // ---------------------------------------------------------------------------
 const lonelyIf = (a: boolean, b: boolean) => {
   if (a) {
     return 1;
-  } else {
+  } 
     if (b) {
       return 2;
     }
-  }
+  
   return 0;
 };
 
 // ---------------------------------------------------------------------------
-// no-else-return
+// No-else-return
 //   Unnecessary else after return
 // ---------------------------------------------------------------------------
 const elseReturn = (val: boolean) => {
   if (val) {
     return 'yes';
-  } else {
+  } 
     return 'no';
-  }
+  
 };
 
 // ---------------------------------------------------------------------------
-// no-multi-str
+// No-multi-str
 //   Multiline string with backslash
 // ---------------------------------------------------------------------------
 const multilineStr =
@@ -85,82 +85,78 @@ const multilineStr =
 world';
 
 // ---------------------------------------------------------------------------
-// no-template-curly-in-string
+// No-template-curly-in-string
 //   Template literal syntax in regular string
 // ---------------------------------------------------------------------------
 const templateInStr = '${name} is here';
 
 // ---------------------------------------------------------------------------
-// arrow-body-style
+// Arrow-body-style
 //   Unnecessary block body in arrow function
 // ---------------------------------------------------------------------------
-const arrowBlock = (x: number) => {
-  return x * 2;
-};
+const arrowBlock = (x: number) => x * 2;
 
 // ---------------------------------------------------------------------------
-// prefer-arrow-callback
+// Prefer-arrow-callback
 //   Use arrow function instead of function expression in callbacks
 // ---------------------------------------------------------------------------
-const mapped = [1, 2, 3].map(function double(n) {
-  return n * 2;
-});
+const mapped = [1, 2, 3].map((n) => n * 2);
 
 // ---------------------------------------------------------------------------
-// prefer-destructuring
+// Prefer-destructuring
 //   Use destructuring instead of member access
 // ---------------------------------------------------------------------------
 const destructArr = [1, 2, 3];
 const firstItem = destructArr[0];
 
-const destructObj = { name: 'Alice', age: 30 };
+const destructObj = { age: 30, name: 'Alice' };
 const personName = destructObj.name;
 
 // ---------------------------------------------------------------------------
-// object-shorthand
+// Object-shorthand
 //   Use shorthand property/method syntax
 // ---------------------------------------------------------------------------
 const shorthandName = 'world';
-const longhand = { shorthandName: shorthandName };
+const longhand = { shorthandName };
 
 const methodLonghand = {
-  greet: function () {
+  greet () {
     return 'hi';
   },
 };
 
 // ---------------------------------------------------------------------------
-// dot-notation
+// Dot-notation
 //   Use dot notation instead of bracket when possible
 // ---------------------------------------------------------------------------
 const dotObj = { name: 'test' };
-const dotAccess = dotObj['name'];
+const dotAccess = dotObj.name;
 
 // ---------------------------------------------------------------------------
-// operator-assignment
+// Operator-assignment
 //   Use shorthand assignment (+=, -=, etc.)
 // ---------------------------------------------------------------------------
 const operatorAssign = () => {
   let count = 0;
-  count = count + 1;
+  count += 1;
   return count;
 };
 
 // ---------------------------------------------------------------------------
-// prefer-exponentiation-operator
+// Prefer-exponentiation-operator
 //   Use ** instead of Math.pow
 // ---------------------------------------------------------------------------
-const powResult = Math.pow(2, 10);
+const powResult = 2**10;
 
 // ---------------------------------------------------------------------------
-// prefer-spread
+// Prefer-spread
 //   Use spread instead of .apply()
 // ---------------------------------------------------------------------------
 const nums = [1, 2, 3];
 const maxVal = Math.max.apply(null, nums);
 
 // ---------------------------------------------------------------------------
-// prefer-rest-params
+// Prefer-rest-params
 //   Use rest params instead of arguments
 // ---------------------------------------------------------------------------
 function restDemo() {
@@ -168,77 +164,80 @@ function restDemo() {
 }
 
 // ---------------------------------------------------------------------------
-// prefer-object-spread
+// Prefer-object-spread
 //   Use spread instead of Object.assign
 // ---------------------------------------------------------------------------
-const merged = Object.assign({}, { a: 1 }, { b: 2 });
+const merged = { a: 1, b: 2};
 
 // ---------------------------------------------------------------------------
-// prefer-numeric-literals
+// Prefer-numeric-literals
 //   Use 0b, 0o, 0x instead of parseInt for binary/octal/hex
 // ---------------------------------------------------------------------------
-const binary = parseInt('111', 2);
+const binary = 0b111;
 
 // ---------------------------------------------------------------------------
-// prefer-regex-literals
+// Prefer-regex-literals
 //   Use regex literal instead of new RegExp()
 // ---------------------------------------------------------------------------
-const regex = new RegExp('abc');
+const regex = /abc/;
 
 // ---------------------------------------------------------------------------
-// spaced-comment
+// Spaced-comment
 //   Comments must have a space after // or /*
 // ---------------------------------------------------------------------------
-//no space after double-slash
+// No space after double-slash
 
 // ---------------------------------------------------------------------------
-// yoda
+// Yoda
 //   Don't use yoda conditions
 // ---------------------------------------------------------------------------
 const yodaCheck = (val: number) => {
-  if (1 === val) {
+  if (val === 1) {
     return true;
   }
   return false;
 };
 
 // ---------------------------------------------------------------------------
-// no-restricted-properties
+// No-restricted-properties
 //   Some property accesses are restricted (e.g. Math.pow → use **)
 //   (already shown via prefer-exponentiation-operator)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// lines-between-class-members
+// Lines-between-class-members
 //   Class members must have empty lines between them
 // ---------------------------------------------------------------------------
 class NoLinesBetween {
   name = 'test';
+
   age = 30;
+
   greet() {
     return this.name;
   }
+
   farewell() {
     return 'bye';
   }
 }
 
 // ---------------------------------------------------------------------------
-// func-names (warn)
+// Func-names (warn)
 //   Function expression should have a name
 // ---------------------------------------------------------------------------
-const funcExpr = function () {
+const funcExpr = function  funcExpr() {
   return 42;
 };
 
 // ---------------------------------------------------------------------------
-// strict
-//   strict mode directive is unnecessary in ESM
+// Strict
+//   Strict mode directive is unnecessary in ESM
 //   (NOTE: in modules this is already implied, so rule warns if present)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// no-constant-condition (warn)
+// No-constant-condition (warn)
 //   Constant value in condition
 // ---------------------------------------------------------------------------
 const constantCond = () => {
@@ -249,10 +248,10 @@ const constantCond = () => {
 };
 
 // ---------------------------------------------------------------------------
-// no-useless-escape
+// No-useless-escape
 //   Unnecessary escape character
 // ---------------------------------------------------------------------------
-const uselessEscape = 'hello\!';
+const uselessEscape = 'hello!';
 
 export {
   greeting,

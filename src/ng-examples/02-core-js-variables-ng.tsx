@@ -6,25 +6,25 @@
 // ---------------------------------------------------------------------------
 // no-var
 // ---------------------------------------------------------------------------
-var mutableVar = 'bad';
+const mutableVar = 'bad';
 
 // ---------------------------------------------------------------------------
 // prefer-const
 // ---------------------------------------------------------------------------
-let neverReassigned = 'should be const';
+const neverReassigned = 'should be const';
 
 // ---------------------------------------------------------------------------
 // no-undef-init
 //   Don't initialize to undefined explicitly
 // ---------------------------------------------------------------------------
-let explicitUndefined = undefined;
+const explicitUndefined = undefined;
 
 // ---------------------------------------------------------------------------
 // one-var
 //   Each variable must have its own declaration
 // ---------------------------------------------------------------------------
-const oneA = 1,
-  oneB = 2;
+const oneA = 1;
+  const oneB = 2;
 
 // ---------------------------------------------------------------------------
 // vars-on-top
@@ -93,7 +93,7 @@ const multiAssign = () => {
 // no-delete-var
 //   Don't delete variables (only properties)
 // ---------------------------------------------------------------------------
-let deletable = 'gone';
+const deletable = 'gone';
 delete (deletable as unknown as Record<string, unknown>);
 
 // ---------------------------------------------------------------------------

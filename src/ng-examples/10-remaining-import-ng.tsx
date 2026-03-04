@@ -3,88 +3,89 @@
  * ========================================================================== */
 
 // ---------------------------------------------------------------------------
-// import/no-absolute-path
+// Import/no-absolute-path
 //   Don't use absolute path imports
 // ---------------------------------------------------------------------------
-// import abs from '/absolute'; // Would fail resolution
+// Import abs from '/absolute'; // Would fail resolution
 
 // ---------------------------------------------------------------------------
-// import/newline-after-import
+// Import/newline-after-import
 //   Must have empty line after last import
 // ---------------------------------------------------------------------------
-import { dummyUtil } from './dummy-util';
+import { dummyUtil } from './dummy-util.ts';
+
 const noNewline = dummyUtil();
 
 // ---------------------------------------------------------------------------
-// import/no-amd
+// Import/no-amd
 //   Don't use AMD define/require
 // ---------------------------------------------------------------------------
-// define(['dep'], function(dep) {}); // Only in JS/CJS context
+// Define(['dep'], function(dep) {}); // Only in JS/CJS context
 
 // ---------------------------------------------------------------------------
-// import/no-webpack-loader-syntax
+// Import/no-webpack-loader-syntax
 //   Don't use webpack ! loader syntax
 // ---------------------------------------------------------------------------
-// import styles from '!css-loader!./style.css'; // Fails resolution
+// Import styles from '!css-loader!./style.css'; // Fails resolution
 
 // ---------------------------------------------------------------------------
-// import/no-dynamic-require
+// Import/no-dynamic-require
 //   Don't use dynamic require()
 // ---------------------------------------------------------------------------
 const dynamicReq = (name: string) => require(name);
 
 // ---------------------------------------------------------------------------
-// import/no-self-import
+// Import/no-self-import
 //   Module should not import itself
 // ---------------------------------------------------------------------------
-// import self from './10-remaining-import-ng'; // Would cause issues
+// Import self from './10-remaining-import-ng'; // Would cause issues
 
 // ---------------------------------------------------------------------------
-// import/no-cycle
+// Import/no-cycle
 //   Circular dependency
 //   (requires 2+ files referencing each other)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/no-extraneous-dependencies
+// Import/no-extraneous-dependencies
 //   Import a package not listed in package.json dependencies
 // ---------------------------------------------------------------------------
-// import _ from 'lodash'; // lodash is not in deps
+// Import _ from 'lodash'; // lodash is not in deps
 
 // ---------------------------------------------------------------------------
-// import/no-import-module-exports
+// Import/no-import-module-exports
 //   Don't mix import with module.exports
 // ---------------------------------------------------------------------------
 // (would need module.exports at bottom, which conflicts with ESM)
 
 // ---------------------------------------------------------------------------
-// import/no-named-as-default
+// Import/no-named-as-default
 //   Don't import default export by its named export name
 //   (requires specific module structure to demonstrate)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/no-named-as-default-member
+// Import/no-named-as-default-member
 //   Don't access named export as property of default
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/no-named-default
+// Import/no-named-default
 //   Don't use named default import
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/no-relative-packages
+// Import/no-relative-packages
 //   Don't use relative paths to import from packages
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/export
+// Import/export
 //   No invalid exports (e.g. duplicate default export)
 // ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
-// import/no-unresolved
+// Import/no-unresolved
 //   Import must resolve to a module
 // ---------------------------------------------------------------------------
 
