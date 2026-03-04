@@ -1,0 +1,17 @@
+{
+  "plugins": ["react", "typescript", "import", "jsx-a11y", "react-hooks", "react-perf"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "pedantic": "warn",
+    "style": "warn",
+    "restriction": "off",
+    "nursery": "off"
+  },
+  "env": {
+    "browser": true
+  },
+  "settings": {
+    "jsx-runtime": "react"
+  }
+}
