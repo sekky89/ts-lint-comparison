@@ -32,7 +32,7 @@ const TypeDemo: FC<{ children: ReactNode }> = ({ children }) => <div>{children}<
 // @typescript-eslint/no-array-constructor
 //   Use [] instead of new Array()
 // ---------------------------------------------------------------------------
-const arr = [];
+const arr = new Array();
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-duplicate-enum-values
@@ -55,7 +55,7 @@ const parseAnything = (data: any): any => data;
 //   Don't use double non-null assertion
 // ---------------------------------------------------------------------------
 const maybeNull: string | null = 'hello';
-const doubleAssert = maybeNull!;
+const doubleAssert = maybeNull!!;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-inferrable-types
@@ -99,7 +99,8 @@ const unsafeChain = nested.inner?.value!;
 // ---------------------------------------------------------------------------
 class ThisAlias {
   method() {
-    return this;
+    const self = this;
+    return self;
   }
 }
 
@@ -107,7 +108,7 @@ class ThisAlias {
 // @typescript-eslint/no-unnecessary-type-constraint
 //   Don't constrain generic to `any` or `unknown` (it's the default)
 // ---------------------------------------------------------------------------
-const identity = <T,>(val: T): T => val;
+const identity = <T extends unknown>(val: T): T => val;
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/no-unsafe-declaration-merging
@@ -137,7 +138,10 @@ const fs = require('fs');
 // @typescript-eslint/prefer-as-const
 //   Use `as const` instead of literal type assertion
 // ---------------------------------------------------------------------------
-const notConst = 'hello' as const;
+const notConst = ['a', 'b'] as ['a', 'b'];
+const objNotConst = { key: 'value' } as { key: string };
+const tupleNotConst = [0, 1] as [number, number];
+const literalObjNotConst = { foo: 'bar' } as { foo: 'bar' };
 
 // ---------------------------------------------------------------------------
 // @typescript-eslint/triple-slash-reference
@@ -167,4 +171,7 @@ export {
   laterFn,
   fs,
   notConst,
+  objNotConst,
+  tupleNotConst,
+  literalObjNotConst,
 };

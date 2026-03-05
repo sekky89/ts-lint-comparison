@@ -6,12 +6,21 @@ const ROOT = join(import.meta.dirname, "..");
 const oxlintRulesPath = "/tmp/oxlint-rules.txt";
 const reportPath = join(ROOT, "REPORT.md");
 
+const detectionRaw = execSync("node scripts/measure-detection.mjs", { cwd: ROOT, encoding: "utf8", maxBuffer: 4 * 1024 * 1024 });
+const detection = JSON.parse(detectionRaw);
+const eslintFired = new Set(detection.eslint || []);
+const oxlintFired = new Set(detection.oxlint || []);
+const biomeFired = new Set(detection.biome || []);
+
 const eslintFixableList = JSON.parse(
   execSync("node scripts/get-eslint-fixable.mjs", { cwd: ROOT, encoding: "utf8", maxBuffer: 1024 * 1024 })
 );
 const eslintFixable = new Set(eslintFixableList);
 
-const oxlintRaw = readFileSync(oxlintRulesPath, "utf8");
+let oxlintRaw = "";
+try {
+  oxlintRaw = readFileSync(oxlintRulesPath, "utf8");
+} catch (_) {}
 const oxlintFixable = new Set();
 for (const line of oxlintRaw.split("\n")) {
   if (!line.startsWith("| ") || line.startsWith("| ---") || line.startsWith("| Rule name")) continue;
@@ -31,6 +40,19 @@ function toOxLintKey(eslintRuleName) {
   if (eslintRuleName.startsWith("react/")) return ["react", eslintRuleName.slice("react/".length)];
   if (eslintRuleName.startsWith("jsx-a11y/")) return ["jsx_a11y", eslintRuleName.slice("jsx-a11y/".length)];
   return ["eslint", eslintRuleName];
+}
+
+function oxlintDetected(eslintRuleName) {
+  const [source, rule] = toOxLintKey(eslintRuleName);
+  if (oxlintFired.has(`${source}:${rule}`)) return "○";
+  if (eslintRuleName === "import/order" && oxlintFired.has("import-js:order")) return "○";
+  if (eslintRuleName === "unused-imports/no-unused-imports" && oxlintFired.has("unused-imports-js:no-unused-imports")) return "○";
+  return "×";
+}
+
+function biomeDetected(eslintRuleName) {
+  const biome = eslintToBiomeRule[eslintRuleName];
+  return biome && biomeFired.has(biome) ? "○" : "×";
 }
 
 const biomeFixableFromRun = new Set([
@@ -88,14 +110,15 @@ function eslintFix(eslintRuleName) {
 }
 
 const report = readFileSync(reportPath, "utf8");
-const tableStart = report.indexOf("| ESLint ルール | ESLint | OxLint |");
+const tableStart = report.indexOf("| ESLint ルール");
 if (tableStart === -1) throw new Error("Table not found");
 
-const headerLine = "| ESLint ルール | ESLint | OxLint | TS重複で無効可 | フォーマッター吸収 | ESLint fix | Biome fix | OxLint fix | 備考（未検出時） |";
-const sepLine = "| --- | --- | --- | --- | --- | --- | --- | --- | --- |";
+const headerLine = "| ESLint ルール | ESLint | OxLint | Biome | TS重複で無効可 | フォーマッター吸収 | ESLint fix | Biome fix | OxLint fix | 備考（未検出時） |";
+const sepLine = "| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |";
 
-const tableEndMarker = "\n*以下は本設定では無効";
-const tableEnd = report.indexOf(tableEndMarker, tableStart);
+let tableEnd = report.indexOf("\n**注:**", tableStart);
+if (tableEnd === -1) tableEnd = report.indexOf("\n" + "以下は本設定では無効", tableStart);
+if (tableEnd === -1) tableEnd = report.length;
 const formatterTableStart = report.indexOf("| indent |", tableEnd);
 const afterMain = report.slice(tableEnd);
 const beforeTable = report.slice(0, tableStart);
@@ -105,13 +128,23 @@ const mainTable = report.slice(tableStart, tableEnd);
 const rows = mainTable.split("\n").filter((line) => line.startsWith("|") && line.includes("|"));
 dataRows = rows.slice(2);
 
-if (dataRows.length === 0) {
+let gitTsFmtNote = null;
+try {
   const gitReport = execSync("git show HEAD:REPORT.md", { cwd: ROOT, encoding: "utf8", maxBuffer: 2 * 1024 * 1024 });
-  const gitTableStart = gitReport.indexOf("| ESLint ルール | ESLint | OxLint |");
-  const gitTableEnd = gitReport.indexOf("\n*以下は", gitTableStart);
-  const gitTable = gitReport.slice(gitTableStart, gitTableEnd);
+  const gitTableStart = gitReport.indexOf("| ESLint ルール");
+  const gitTableEnd = gitReport.indexOf("以下は本設定では無効", gitTableStart) >= 0 ? gitReport.indexOf("以下は本設定では無効", gitTableStart) : gitReport.indexOf("\n**注:**", gitTableStart);
+  const gitTable = gitReport.slice(gitTableStart, gitTableEnd >= 0 ? gitTableEnd : gitReport.length);
   const gitRows = gitTable.split("\n").filter((l) => l.startsWith("|") && l.includes("|"));
-  dataRows = gitRows.slice(2);
+  gitTsFmtNote = {};
+  for (const line of gitRows.slice(2)) {
+    const p = line.split("|").map((s) => s.trim());
+    const c = p.slice(1, p.length - 1);
+    if (c.length >= 9 && c[0]) gitTsFmtNote[c[0]] = { ts: c[3] ?? "", fmt: c[4] ?? "", note: c[8] ?? "" };
+  }
+} catch (_) {}
+
+if (dataRows.length === 0 && gitTsFmtNote && Object.keys(gitTsFmtNote).length > 0) {
+  dataRows = Object.entries(gitTsFmtNote).map(([ruleName, v]) => `| ${ruleName} | | | | ${v.ts} | ${v.fmt} | | | | ${v.note} |`);
 }
 
 const newRows = [headerLine, sepLine];
@@ -120,15 +153,18 @@ for (const row of dataRows) {
   const cells = parts.slice(1, parts.length - 1);
   if (cells.length < 4) continue;
   const ruleName = cells[0];
-  const es = cells[1];
-  const ox = cells[2];
-  const tsDup = cells[3] ?? "";
-  const fmtAbs = cells[4] ?? "";
-  const note = (cells.length >= 5 ? cells[cells.length - 1] : cells[5]) ?? "";
+  const es = eslintFired.has(ruleName) ? "○" : "×";
+  const ox = oxlintDetected(ruleName);
+  const biomeCol = biomeDetected(ruleName);
+  const hasBiomeCol = cells.length >= 10;
+  const fromGit = gitTsFmtNote && gitTsFmtNote[ruleName];
+  const tsDup = fromGit ? fromGit.ts : ((hasBiomeCol ? cells[4] : cells[3]) ?? "");
+  const fmtAbs = fromGit ? fromGit.fmt : ((hasBiomeCol ? cells[5] : cells[4]) ?? "");
+  const note = fromGit ? fromGit.note : (cells[cells.length - 1] ?? "");
   const actualEslintFix = eslintFix(ruleName);
   const biomeFixCol = biomeFix(ruleName);
   const oxlintFixCol = oxlintFix(ruleName);
-  newRows.push(`| ${ruleName} | ${es} | ${ox} | ${tsDup} | ${fmtAbs} | ${actualEslintFix} | ${biomeFixCol} | ${oxlintFixCol} | ${note} |`);
+  newRows.push(`| ${ruleName} | ${es} | ${ox} | ${biomeCol} | ${tsDup} | ${fmtAbs} | ${actualEslintFix} | ${biomeFixCol} | ${oxlintFixCol} | ${note} |`);
 }
 
 const formatterSection = report.slice(formatterTableStart);
@@ -147,11 +183,11 @@ for (const line of formatterLines) {
   const ox = cells[2] ?? "";
   const tsDup = cells[3] ?? "";
   const fmtAbs = cells[4] ?? "";
-  const note = cells[5] ?? "";
-  const eslintFixCol = cells[6] ?? "－";
-  const biomeFixCol = cells[7] ?? "－";
-  const oxlintFixCol = ruleName ? oxlintFix(ruleName) : "－";
-  formatterRows.push(`| ${ruleName} | ${es} | ${ox} | ${tsDup} | ${fmtAbs} | ${eslintFixCol} | ${biomeFixCol} | ${oxlintFixCol} | ${note} |`);
+  const eslintFixCol = cells[5] ?? "－";
+  const biomeFixCol = cells[6] ?? "－";
+  const oxlintFixCol = cells[7] ?? (ruleName ? oxlintFix(ruleName) : "－");
+  const note = cells[8] ?? "";
+  formatterRows.push(`| ${ruleName} | ${es} | ${ox} | － | ${tsDup} | ${fmtAbs} | ${eslintFixCol} | ${biomeFixCol} | ${oxlintFixCol} | ${note} |`);
 }
 
 const newTable = newRows.join("\n");

@@ -49,7 +49,7 @@ const BadRole = () => <div role="not-a-real-role">text</div>;
 // Jsx-a11y/aria-unsupported-elements
 //   ARIA attributes on elements that don't support them
 // ---------------------------------------------------------------------------
-const AriaOnMeta = () => <meta  />;
+const AriaOnMeta = () => <meta aria-hidden="true" />;
 
 // ---------------------------------------------------------------------------
 // Jsx-a11y/click-events-have-key-events
@@ -163,7 +163,7 @@ const NoninteractiveTab = () => <div tabIndex={0}>tabbable div</div>;
 // Jsx-a11y/no-redundant-roles
 //   Don't add redundant roles (e.g., role="button" on <button>)
 // ---------------------------------------------------------------------------
-const RedundantRole = () => <button type="button" >btn</button>;
+const RedundantRole = () => <button type="button" role="button">btn</button>;
 
 // ---------------------------------------------------------------------------
 // Jsx-a11y/no-static-element-interactions
@@ -190,7 +190,7 @@ const BadRoleProp = () => <div role="alert" aria-checked="true">alert</div>;
 const ScopeOnTd = () => (
   <table>
     <tbody>
-      <tr><td >bad scope</td></tr>
+      <tr><td scope="row">bad scope on td</td></tr>
     </tbody>
   </table>
 );

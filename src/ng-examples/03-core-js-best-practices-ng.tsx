@@ -36,7 +36,10 @@ const consoleUsage = () => {
 // ---------------------------------------------------------------------------
 // No-debugger
 // ---------------------------------------------------------------------------
-const debuggerUsage = () => 1;
+const debuggerUsage = () => {
+  debugger;
+  return 1;
+};
 
 // ---------------------------------------------------------------------------
 // No-param-reassign
@@ -256,14 +259,14 @@ const uselessCatch = async () => {
 // ---------------------------------------------------------------------------
 const uselessReturn = () => {
   console.log('done');
-  
+  return;
 };
 
 // ---------------------------------------------------------------------------
 // No-useless-concat
 //   Unnecessary string concatenation of literals
 // ---------------------------------------------------------------------------
-const uselessConcat = "hello world";
+const uselessConcat = 'hello' + ' ' + 'world';
 
 // ---------------------------------------------------------------------------
 // No-self-compare
@@ -327,9 +330,9 @@ const dynamicFn = new Function('a', 'b', 'return a + b');
 // No-new-wrappers
 //   Don't use new String(), new Number(), new Boolean()
 // ---------------------------------------------------------------------------
-const wrappedString = 'hello';
-const wrappedNumber = 42;
-const wrappedBool = true;
+const wrappedString = new String('hello');
+const wrappedNumber = new Number(42);
+const wrappedBool = new Boolean(true);
 
 // ---------------------------------------------------------------------------
 // No-new-object
@@ -347,15 +350,20 @@ const scriptUrl = () => <a href="javascript:void(0)">link</a>;
 // No-extra-bind
 //   Unnecessary .bind()
 // ---------------------------------------------------------------------------
-const extraBind = (() => 42);
+const extraBind = (function fn() { return 1; }).bind(null);
 
 // ---------------------------------------------------------------------------
 // No-extra-label
 //   Unnecessary label
 // ---------------------------------------------------------------------------
 const extraLabel = () => {
-  while (true) {
+  outer: while (true) {
     break;
+  }
+};
+const anotherExtraLabel = () => {
+  inner: for (let i = 0; i < 3; i++) {
+    if (i > 0) break;
   }
 };
 
@@ -414,18 +422,14 @@ const emptyFn = () => {};
 // No-extra-boolean-cast
 //   Unnecessary boolean cast
 // ---------------------------------------------------------------------------
-const extraBoolCast = (val: string) => {
-  if (val) {
-    return true;
-  }
-  return false;
-};
+const extraBoolCast = (val: boolean) => !!val;
+const redundantBoolean = (flag: boolean) => (Boolean(flag) ? 'y' : 'n');
 
 // ---------------------------------------------------------------------------
 // No-prototype-builtins
 //   Don't call prototype methods directly on objects
 // ---------------------------------------------------------------------------
-const protoBuiltin = (obj: Record<string, unknown>) => Object.hasOwn(obj, 'key');
+const protoBuiltin = (obj: Record<string, unknown>) => obj.hasOwnProperty('key');
 
 // ---------------------------------------------------------------------------
 // Class-methods-use-this
@@ -447,20 +451,78 @@ class NoThisMethod {
 //   Unnecessary constructor
 // ---------------------------------------------------------------------------
 class UselessConstructor {
-  
+  constructor() {}
 }
 
 // ---------------------------------------------------------------------------
 // No-useless-computed-key
 //   Unnecessary computed property key
 // ---------------------------------------------------------------------------
-const computedKey = { 'name': 'value' };
+const computedKey = { ['a']: 1 };
 
 // ---------------------------------------------------------------------------
 // No-useless-rename
 //   Unnecessary rename in destructuring
 // ---------------------------------------------------------------------------
-const { toString } = Object.prototype;
+const { a: a } = { a: 1 };
+
+// ---------------------------------------------------------------------------
+// No-dupe-else-if
+//   Duplicate condition in else-if chain
+// ---------------------------------------------------------------------------
+const dupeElseIf = (x: number) => {
+  if (x === 1) return 'a';
+  else if (x === 2) return 'b';
+  else if (x === 1) return 'a again';
+  return '';
+};
+
+// ---------------------------------------------------------------------------
+// No-else-return
+//   Unnecessary else after return
+// ---------------------------------------------------------------------------
+const elseReturn = (x: boolean) => {
+  if (x) return 'yes';
+  else return 'no';
+};
+
+// ---------------------------------------------------------------------------
+// No-regex-spaces
+//   Multiple spaces in regex
+// ---------------------------------------------------------------------------
+const regexSpaces = /a   b/;
+
+// ---------------------------------------------------------------------------
+// No-unneeded-ternary
+//   Unnecessary ternary (e.g. x ? true : false)
+// ---------------------------------------------------------------------------
+const unneededTernary = (x: boolean) => x ? true : false;
+
+// ---------------------------------------------------------------------------
+// No-unused-labels
+//   Label declared but never used
+// ---------------------------------------------------------------------------
+const unusedLabels = () => {
+  foo: for (let i = 0; i < 3; i++) {
+    if (i === 1) break;
+  }
+};
+
+// ---------------------------------------------------------------------------
+// No-useless-escape
+//   Unnecessary escape in regex (e.g. [.] not [\.] in char class)
+// ---------------------------------------------------------------------------
+const uselessEscape = /[\.]/;
+
+// ---------------------------------------------------------------------------
+// Operator-assignment
+//   Use += instead of x = x + 1
+// ---------------------------------------------------------------------------
+const operatorAssign = () => {
+  let n = 0;
+  n = n + 1;
+  return n;
+};
 
 export {
   loose,
@@ -507,15 +569,24 @@ export {
   scriptUrl,
   extraBind,
   extraLabel,
+  anotherExtraLabel,
   labelsUsage,
   loneBlock,
   caseDecl,
   emptyBlock,
   emptyFn,
   extraBoolCast,
+  redundantBoolean,
   protoBuiltin,
   NoThisMethod,
   UselessConstructor,
   computedKey,
-  toString,
+  a,
+  dupeElseIf,
+  elseReturn,
+  regexSpaces,
+  unneededTernary,
+  unusedLabels,
+  uselessEscape,
+  operatorAssign,
 };

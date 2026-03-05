@@ -64,4 +64,44 @@ module.exports = {
       node: { extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'] },
     },
   },
+  overrides: [
+    {
+      files: ['src/ng-examples/12-no-restricted-exports-ng.tsx'],
+      rules: {
+        'no-restricted-exports': ['error', { restrictDefaultExports: { direct: true } }],
+      },
+    },
+    {
+      files: ['src/ng-examples/08-remaining-core-ng.tsx'],
+      rules: {
+        'no-irregular-whitespace': ['error', { skipStrings: false }],
+        'prefer-destructuring': ['error', { object: true, array: true }],
+      },
+    },
+    {
+      files: ['src/ng-examples/01-typescript-eslint-ng.tsx'],
+      rules: {
+        '@typescript-eslint/prefer-as-const': 'error',
+      },
+    },
+    {
+      files: ['src/ng-examples/03-core-js-best-practices-ng.tsx'],
+      rules: {
+        'no-labels': 'off',
+        'no-extra-label': 'error',
+      },
+    },
+    {
+      files: ['src/ng-examples/sort-imports-ng.tsx'],
+      rules: {
+        'sort-imports': ['error', { ignoreCase: true, ignoreDeclarationSort: false }],
+      },
+    },
+    {
+      files: ['src/ng-examples/export-not-last.tsx'],
+      rules: {
+        'import/exports-last': 'error',
+      },
+    },
+  ],
 };

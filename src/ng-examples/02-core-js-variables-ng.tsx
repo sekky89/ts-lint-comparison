@@ -17,14 +17,13 @@ const neverReassigned = 'should be const';
 // no-undef-init
 //   Don't initialize to undefined explicitly
 // ---------------------------------------------------------------------------
-const explicitUndefined = undefined;
+let explicitUndefined = undefined;
 
 // ---------------------------------------------------------------------------
 // one-var
 //   Each variable must have its own declaration
 // ---------------------------------------------------------------------------
-const oneA = 1;
-  const oneB = 2;
+const oneA = 1, oneB = 2;
 
 // ---------------------------------------------------------------------------
 // vars-on-top

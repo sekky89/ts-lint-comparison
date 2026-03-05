@@ -1,0 +1,8 @@
+`$call($args)` where {
+    $call <: `console.log`,
+    register_diagnostic(
+        severity = "warn",
+        span = $call,
+        message = "Unexpected console statement. Use a proper logger or remove in production."
+    )
+}

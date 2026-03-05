@@ -7,7 +7,7 @@
 // Prefer-template
 //   Use template literals instead of string concatenation
 // ---------------------------------------------------------------------------
-const greeting = (name: string) => `Hello, ${  name  }!`;
+const greeting = (name: string) => 'Hello, ' + name + '!';
 
 // ---------------------------------------------------------------------------
 // No-nested-ternary
@@ -56,11 +56,11 @@ const continueDemo = (arr: number[]) => {
 const lonelyIf = (a: boolean, b: boolean) => {
   if (a) {
     return 1;
-  } 
+  } else {
     if (b) {
       return 2;
     }
-  
+  }
   return 0;
 };
 
@@ -94,13 +94,13 @@ const templateInStr = '${name} is here';
 // Arrow-body-style
 //   Unnecessary block body in arrow function
 // ---------------------------------------------------------------------------
-const arrowBlock = (x: number) => x * 2;
+const arrowBlock = (x: number) => { return x * 2; };
 
 // ---------------------------------------------------------------------------
 // Prefer-arrow-callback
 //   Use arrow function instead of function expression in callbacks
 // ---------------------------------------------------------------------------
-const mapped = [1, 2, 3].map((n) => n * 2);
+const mapped = [1, 2, 3].map(function(n) { return n * 2; });
 
 // ---------------------------------------------------------------------------
 // Prefer-destructuring
@@ -117,7 +117,7 @@ const personName = destructObj.name;
 //   Use shorthand property/method syntax
 // ---------------------------------------------------------------------------
 const shorthandName = 'world';
-const longhand = { shorthandName };
+const longhand = { shorthandName: shorthandName };
 
 const methodLonghand = {
   greet () {
@@ -130,7 +130,7 @@ const methodLonghand = {
 //   Use dot notation instead of bracket when possible
 // ---------------------------------------------------------------------------
 const dotObj = { name: 'test' };
-const dotAccess = dotObj.name;
+const dotAccess = dotObj['name'];
 
 // ---------------------------------------------------------------------------
 // Operator-assignment
@@ -138,7 +138,7 @@ const dotAccess = dotObj.name;
 // ---------------------------------------------------------------------------
 const operatorAssign = () => {
   let count = 0;
-  count += 1;
+  count = count + 1;
   return count;
 };
 
@@ -146,7 +146,7 @@ const operatorAssign = () => {
 // Prefer-exponentiation-operator
 //   Use ** instead of Math.pow
 // ---------------------------------------------------------------------------
-const powResult = 2**10;
+const powResult = Math.pow(2, 10);
 
 // ---------------------------------------------------------------------------
 // Prefer-spread
@@ -167,32 +167,33 @@ function restDemo() {
 // Prefer-object-spread
 //   Use spread instead of Object.assign
 // ---------------------------------------------------------------------------
-const merged = { a: 1, b: 2};
+const spreadSource = { a: 1, b: 2 };
+const merged = Object.assign({}, spreadSource);
 
 // ---------------------------------------------------------------------------
 // Prefer-numeric-literals
 //   Use 0b, 0o, 0x instead of parseInt for binary/octal/hex
 // ---------------------------------------------------------------------------
-const binary = 0b111;
+const binary = parseInt('111', 2);
 
 // ---------------------------------------------------------------------------
 // Prefer-regex-literals
 //   Use regex literal instead of new RegExp()
 // ---------------------------------------------------------------------------
-const regex = /abc/;
+const regex = new RegExp('abc');
 
 // ---------------------------------------------------------------------------
 // Spaced-comment
 //   Comments must have a space after // or /*
 // ---------------------------------------------------------------------------
-// No space after double-slash
+//no space after double-slash
 
 // ---------------------------------------------------------------------------
 // Yoda
 //   Don't use yoda conditions
 // ---------------------------------------------------------------------------
 const yodaCheck = (val: number) => {
-  if (val === 1) {
+  if (1 === val) {
     return true;
   }
   return false;
@@ -210,13 +211,10 @@ const yodaCheck = (val: number) => {
 // ---------------------------------------------------------------------------
 class NoLinesBetween {
   name = 'test';
-
   age = 30;
-
   greet() {
     return this.name;
   }
-
   farewell() {
     return 'bye';
   }
@@ -226,7 +224,7 @@ class NoLinesBetween {
 // Func-names (warn)
 //   Function expression should have a name
 // ---------------------------------------------------------------------------
-const funcExpr = function  funcExpr() {
+const funcExpr = function() {
   return 42;
 };
 
@@ -251,7 +249,7 @@ const constantCond = () => {
 // No-useless-escape
 //   Unnecessary escape character
 // ---------------------------------------------------------------------------
-const uselessEscape = 'hello!';
+const uselessEscape = /\./;
 
 export {
   greeting,
@@ -276,6 +274,7 @@ export {
   powResult,
   maxVal,
   restDemo,
+  spreadSource,
   merged,
   binary,
   regex,

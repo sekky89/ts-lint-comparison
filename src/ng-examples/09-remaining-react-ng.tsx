@@ -3,6 +3,7 @@
  * Rules not yet detected in previous files
  * ========================================================================== */
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 // ---------------------------------------------------------------------------
 // React/prop-types
@@ -37,6 +38,12 @@ class DeprecatedAPI extends React.Component {
 // React/no-render-return-value
 //   Don't use the return value of ReactDOM.render
 // ---------------------------------------------------------------------------
+const RenderReturnValue = () => {
+  const container = typeof document !== 'undefined' ? document.createElement('div') : null;
+  if (!container) return null;
+  const returnValue = ReactDOM.render(<div>ng</div>, container);
+  return <div>{String(returnValue)}</div>;
+};
 
 // ---------------------------------------------------------------------------
 // React/no-this-in-sfc
@@ -200,6 +207,7 @@ class DidUpdate extends React.Component {
 
 export {
   DeprecatedAPI,
+  RenderReturnValue,
   ThisInSfc,
   TypoClass,
   WillUpdateSetState,

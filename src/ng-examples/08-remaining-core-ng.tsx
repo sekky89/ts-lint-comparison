@@ -26,7 +26,7 @@ const asyncExecutor = new Promise(async (resolve) => {
 // No-compare-neg-zero
 //   Don't compare to -0
 // ---------------------------------------------------------------------------
-const negZero = (x: number) => x === 0;
+const negZero = (x: number) => x === -0;
 
 // ---------------------------------------------------------------------------
 // No-cond-assign
@@ -49,6 +49,20 @@ const dupeElseIf = (val: string) => {
   if (val === 'b') {return 2;}
   if (val === 'a') {return 3;}
   return 0;
+};
+
+// ---------------------------------------------------------------------------
+// No-case-declarations
+//   Lexical declaration in case without block
+// ---------------------------------------------------------------------------
+const caseDeclarations = (val: string) => {
+  switch (val) {
+    case 'a':
+      const msg = 'one';
+      return msg;
+    default:
+      return '';
+  }
 };
 
 // ---------------------------------------------------------------------------
@@ -117,9 +131,8 @@ const unsafeOptChain = 1 + maybeObj?.val!;
 //   Unused label
 // ---------------------------------------------------------------------------
 const unusedLabel = () => {
-  {
-    const x = 1;
-    return x;
+  outer: for (let i = 0; i < 3; i++) {
+    if (i === 1) break;
   }
 };
 
@@ -133,6 +146,7 @@ const unusedLabel = () => {
 //   Use Number.isNaN() instead of comparison with NaN
 // ---------------------------------------------------------------------------
 const nanCheck = (val: number) => isNaN(val);
+const nanCompare = (x: number) => (x === NaN ? 'nan' : 'ok');
 
 // ---------------------------------------------------------------------------
 // Valid-typeof
@@ -179,14 +193,22 @@ const multiSpaceRegex = /foo {3}bar/;
 
 // ---------------------------------------------------------------------------
 // No-misleading-character-class
-//   Misleading character class (combined chars)
+//   Misleading character class (e.g. multi-codepoint/surrogate in [])
 // ---------------------------------------------------------------------------
+const misleadingCharClass = /[👍]/;
+
+// ---------------------------------------------------------------------------
+// No-irregular-whitespace
+//   No irregular whitespace (e.g. \u00a0)
+// ---------------------------------------------------------------------------
+const irregularWs = 'a b';
 
 // ---------------------------------------------------------------------------
 // No-useless-backreference
 //   Backreference that will always be empty
 // ---------------------------------------------------------------------------
 const uselessBackref = /(?:a)|(b)\1/;
+const uselessBackrefOptional = /(a?)\1/;
 
 // ---------------------------------------------------------------------------
 // No-octal
@@ -207,6 +229,7 @@ const uselessBackref = /(?:a)|(b)\1/;
 // ---------------------------------------------------------------------------
 const obj = { age: 30, name: 'test' };
 const {name} = obj;
+const ageFromObj = obj.age;
 
 // ---------------------------------------------------------------------------
 // Prefer-spread
@@ -260,10 +283,10 @@ const thing = new myConstructor();
 //   Getter and setter should be adjacent
 // ---------------------------------------------------------------------------
 const groupedAccessor = {
-  age: 30,
   get name() {
     return 'hello';
   },
+  age: 30,
   set name(val: string) {
     console.log(val);
   },
@@ -336,6 +359,7 @@ export {
   negZero,
   condAssign,
   dupeElseIf,
+  caseDeclarations,
   dupeCase,
   emptyPattern,
   exAssign,
@@ -344,13 +368,18 @@ export {
   unsafeOptChain,
   unusedLabel,
   nanCheck,
+  nanCompare,
   badTypeof,
   innerDecl,
   controlRegex,
   emptyCharClass,
   multiSpaceRegex,
+  misleadingCharClass,
+  irregularWs,
   uselessBackref,
+  uselessBackrefOptional,
   name,
+  ageFromObj,
   maxNum,
   loopFn,
   lazyRequire,

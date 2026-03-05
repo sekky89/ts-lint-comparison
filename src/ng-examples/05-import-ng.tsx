@@ -2,11 +2,9 @@
  * import/* rules NG examples
  * Source: airbnb / eslint-plugin-import
  * ========================================================================== */
-
+const beforeImports = 1;
 // ---------------------------------------------------------------------------
 // Import/order
-//   External imports must come before internal, with newlines between groups
-//   Alphabetically ordered within groups
 // ---------------------------------------------------------------------------
 import { useState } from 'react';
 
@@ -37,8 +35,7 @@ import { useCallback } from 'react';
 // Import/no-webpack-loader-syntax
 //   Don't use webpack loader syntax
 // ---------------------------------------------------------------------------
-// Import styles from '!style-loader!css-loader!./styles.css';
-// (commented out because it would fail resolution)
+import '!style-loader!css-loader!./dummy-styles.css';
 
 // ---------------------------------------------------------------------------
 // Import/no-named-default
@@ -73,18 +70,16 @@ import { Link, Route, Routes } from 'react-router';
 import About from '../pages/About.tsx';
 
 import { dummyUtil , dummyUtil as dup } from './dummy-util.ts';
-
+const afterImportNoNewline = 1;
+// ---------------------------------------------------------------------------
+// Import/no-useless-path-segments - redundant ./ in path
+// ---------------------------------------------------------------------------
+import { dummyUtil as dummyUtil2 } from '././dummy-util.ts';
 
 // ---------------------------------------------------------------------------
-// Import/first
-//   Imports must come before any other statements
+// Import/first / Import/newline-after-import (afterImportNoNewline has no newline before it)
 // ---------------------------------------------------------------------------
 const earlyStatement = 'I should not be here before imports';
-
-// ---------------------------------------------------------------------------
-// Import/newline-after-import
-//   Must have empty line after last import
-// ---------------------------------------------------------------------------
 
 // ---------------------------------------------------------------------------
 // Import/no-mutable-exports
@@ -112,4 +107,4 @@ const ImportDemo = () => {
   );
 };
 
-export { earlyStatement, ImportDemo, Route, Link, Routes };
+export { beforeImports, afterImportNoNewline, dummyUtil2, earlyStatement, ImportDemo, Route, Link, Routes };

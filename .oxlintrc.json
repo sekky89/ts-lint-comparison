@@ -1,17 +1,26 @@
 {
-  "plugins": ["react", "typescript", "import", "jsx-a11y", "react-hooks", "react-perf"],
+  "plugins": ["react", "typescript", "import", "jsx-a11y", "react-hooks", "react-perf", "promise", "node"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
     "pedantic": "warn",
     "style": "warn",
-    "restriction": "off",
-    "nursery": "off"
+    "restriction": "warn",
+    "nursery": "warn"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "es2021": true
   },
   "settings": {
     "jsx-runtime": "react"
+  },
+  "jsPlugins": [
+    { "name": "import-js", "specifier": "eslint-plugin-import" },
+    { "name": "unused-imports-js", "specifier": "eslint-plugin-unused-imports" }
+  ],
+  "rules": {
+    "import-js/order": ["warn", { "groups": ["builtin", "external", "internal", "parent", "sibling", "index"], "alphabetize": { "order": "asc", "caseInsensitive": true }, "newlines-between": "always" }],
+    "unused-imports-js/no-unused-imports": "warn"
   }
 }

@@ -8,7 +8,7 @@ import React, { createContext, useEffect, useState } from 'react';
 // React/function-component-definition
 //   Named components must be arrow functions
 // ---------------------------------------------------------------------------
-const FunctionComp = () => <div>should be arrow</div>
+function FunctionComp() { return <div>should be arrow</div>; }
 
 // ---------------------------------------------------------------------------
 // React/button-has-type
@@ -20,7 +20,7 @@ const NoTypeBtn = () => <button>click</button>;
 // React/self-closing-comp
 //   Components without children must self-close
 // ---------------------------------------------------------------------------
-const NotSelfClose = () => <div />;
+const NotSelfClose = () => <div></div>;
 
 // ---------------------------------------------------------------------------
 // React/destructuring-assignment
@@ -32,14 +32,16 @@ const NoDestructure = (props: { title: string }) => <h1>{props.title}</h1>;
 // React/jsx-curly-brace-presence
 //   Unnecessary curly braces around string literal
 // ---------------------------------------------------------------------------
-const UnnecessaryCurly = () => <div title="hello">text</div>;
+const UnnecessaryCurly = () => <div title={"hello"}>text</div>;
 
 // ---------------------------------------------------------------------------
 // React/jsx-no-useless-fragment
 //   Fragment wrapping a single child
 // ---------------------------------------------------------------------------
 const UselessFrag = () => (
-  <div>only child</div>
+  <>
+    <div>only child</div>
+  </>
 );
 
 // ---------------------------------------------------------------------------
@@ -52,12 +54,18 @@ const LongFragment = () => (
     <div>b</div>
   </>
 );
+const ReactFragmentStyle = () => (
+  <React.Fragment>
+    <span>a</span>
+    <span>b</span>
+  </React.Fragment>
+);
 
 // ---------------------------------------------------------------------------
 // React/jsx-boolean-value
 //   Boolean props should omit ={true}
 // ---------------------------------------------------------------------------
-const BoolValue = () => <input disabled />;
+const BoolValue = () => <input disabled={true} />;
 
 // ---------------------------------------------------------------------------
 // React/jsx-no-bind
@@ -79,7 +87,7 @@ class BindInJsx extends React.Component {
 // React/jsx-no-target-blank
 //   Target="_blank" without rel="noreferrer"
 // ---------------------------------------------------------------------------
-const UnsafeBlank = () => <a href="https://evil.com" target="_blank" rel="noreferrer">link</a>;
+const UnsafeBlank = () => <a href="https://evil.com" target="_blank">link</a>;
 
 // ---------------------------------------------------------------------------
 // React/jsx-no-script-url
@@ -377,7 +385,7 @@ const InvalidRel = () => <a href="/" rel="invalid-value">link</a>;
 //   Lifecycle methods should not be arrow functions
 // ---------------------------------------------------------------------------
 class ArrowLifecycle extends React.Component {
-  componentDidMount() {
+  componentDidMount = () => {
     console.log('mounted');
   };
 
@@ -433,6 +441,7 @@ export {
   UnnecessaryCurly,
   UselessFrag,
   LongFragment,
+  ReactFragmentStyle,
   BoolValue,
   BindInJsx,
   UnsafeBlank,

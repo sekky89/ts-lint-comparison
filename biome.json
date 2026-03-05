@@ -24,9 +24,11 @@
 			"performance": "error",
 			"security": "error",
 			"style": "warn",
-			"suspicious": "error"
+			"suspicious": "error",
+			"nursery": "warn"
 		}
 	},
+	"plugins": ["./biome-rules/prefer-object-spread.grit", "./biome-rules/no-console-warn.grit"],
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
